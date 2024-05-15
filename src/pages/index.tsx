@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { type PhoneDimensions, phoneModels } from "~/data/PhoneModel";
+import Image from "next/image";
 
 type FormData = {
   linkedin: string;
@@ -133,13 +134,37 @@ export default function Home({ onSubmit }: HomeProps) {
             </section>
             <aside className="flex justify-center">
               <div
-                className="rounded-lg border border-black p-3"
+                className="flex flex-col justify-between rounded-lg border border-black p-3"
                 style={{
                   width: `${dimensions.width}px`,
                   height: `${dimensions.height}px`,
                 }}
               >
-                sdsd
+                <div className="h-[27%] bg-slate-400"></div>
+                <div className="flex flex-col gap-1">
+                  <h1 className="text-2xl font-extralight">
+                    Hello, I am {formData.fullName}
+                  </h1>
+                  <h2 className="text-xl font-extralight">
+                    {formData.jobTitle} @ {formData.company}
+                  </h2>
+                  <p className="text-xl font-extralight">
+                    Contact Number: {formData.phone}
+                  </p>
+                  <div className="flex items-center">
+                    <Image
+                      src={"/telegram.svg"}
+                      alt=""
+                      height={300}
+                      width={300}
+                      className="mr-2 h-6 w-6"
+                    />
+                    <p className="text-xl font-extralight">
+                      @{formData.telegram}
+                    </p>
+                  </div>
+                </div>
+                <div className="h-[11%] bg-slate-400"></div>
               </div>
             </aside>
           </div>
