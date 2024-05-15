@@ -66,7 +66,7 @@ export default function Home({ onSubmit }: HomeProps) {
               <select
                 value={selectedModel}
                 onChange={handleModelChange}
-                className="dropdown"
+                className="dropdown rounded-md border px-2 py-3 text-sm"
               >
                 {Object.keys(phoneModels).map((model) => (
                   <option key={model} value={model}>
@@ -133,13 +133,13 @@ export default function Home({ onSubmit }: HomeProps) {
             </section>
             <aside className="flex justify-center">
               <div
-                className="border border-black"
+                className="rounded-lg border border-black p-3"
                 style={{
                   width: `${dimensions.width}px`,
                   height: `${dimensions.height}px`,
                 }}
               >
-                sds
+                sdsd
               </div>
             </aside>
           </div>
