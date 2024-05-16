@@ -4,6 +4,8 @@ import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { type PhoneDimensions, phoneModels } from "~/data/PhoneModel";
 import Image from "next/image";
+import { Textarea } from "~/components/ui/textarea";
+import { Separator } from "~/components/ui/separator";
 
 type FormData = {
   linkedin: string;
@@ -38,7 +40,7 @@ export default function Home({ onSubmit }: HomeProps) {
   const [selectedModel, setSelectedModel] = useState<string>("iPhone13");
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     index?: number,
     field?: string,
   ) => {
@@ -92,71 +94,66 @@ export default function Home({ onSubmit }: HomeProps) {
       </Head>
       <main className="max-w-7xl bg-neutral-100 p-12">
         <form className="flex flex-col gap-3">
-          <h1 className="text-5xl font-semibold">
+          <h1 className="pb-12 text-5xl font-semibold">
             Networking Lock Screen Generator
           </h1>
           <div className="grid grid-cols-2 gap-3">
             <section className="flex flex-col gap-3">
-              <select
-                value={selectedModel}
-                onChange={handleModelChange}
-                className="dropdown rounded-md border px-2 py-3 text-sm"
-              >
-                {Object.keys(phoneModels).map((model) => (
-                  <option key={model} value={model}>
-                    {model}
-                  </option>
-                ))}
-              </select>
+              <div className="flex items-center gap-2">
+                <p className="pl-1 text-sm font-extralight">Phone Model: </p>
+                <select
+                  value={selectedModel}
+                  onChange={handleModelChange}
+                  className="dropdown rounded-md border px-2 py-3 text-sm"
+                >
+                  {Object.keys(phoneModels).map((model) => (
+                    <option key={model} value={model}>
+                      {model}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <Input
                 type="text"
                 name="fullName"
                 placeholder="Full Name"
-                className="input-field"
                 onChange={handleChange}
               />
               <Input
                 type="text"
                 name="phone"
                 placeholder="Phone Number"
-                className="input-field"
                 onChange={handleChange}
               />
               <Input
                 type="email"
                 name="email"
                 placeholder="Email"
-                className="input-field"
                 onChange={handleChange}
               />
               <Input
                 type="text"
                 name="telegram"
                 placeholder="Telegram Handle"
-                className="input-field"
                 onChange={handleChange}
               />
               <Input
                 type="text"
                 name="linkedin"
                 placeholder="LinkedIn URL"
-                className="input-field"
                 onChange={handleChange}
               />
               <Input
                 type="text"
                 name="github"
                 placeholder="GitHub URL"
-                className="input-field"
                 onChange={handleChange}
               />
-              <Input
-                type="text"
+              <Textarea
                 name="additionalInfo"
                 placeholder="Additional Information"
-                className="input-field"
                 value={formData.additionalInfo}
-                onChange={handleChange}
+                onChange={(e) => handleChange(e)}
               />
               {formData.positions.map((position, index) => (
                 <div key={index} className="flex items-center gap-2">
@@ -164,7 +161,6 @@ export default function Home({ onSubmit }: HomeProps) {
                     type="text"
                     name="jobTitle"
                     placeholder="Job Title"
-                    className="input-field"
                     value={position.jobTitle}
                     onChange={(e) => handleChange(e, index, "jobTitle")}
                   />
@@ -172,7 +168,6 @@ export default function Home({ onSubmit }: HomeProps) {
                     type="text"
                     name="company"
                     placeholder="Company"
-                    className="input-field"
                     value={position.company}
                     onChange={(e) => handleChange(e, index, "company")}
                   />
@@ -229,6 +224,13 @@ export default function Home({ onSubmit }: HomeProps) {
                       @{formData.telegram}
                     </p>
                   </div>
+                  {formData.additionalInfo && <Separator className="my-4" />}
+                  <p
+                    className="text-xl font-extralight"
+                    style={{ whiteSpace: "pre-line" }}
+                  >
+                    {formData.additionalInfo}
+                  </p>
                 </div>
                 <div className="h-[11%] bg-slate-400"></div>
               </div>
