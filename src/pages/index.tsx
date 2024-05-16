@@ -13,6 +13,7 @@ type FormData = {
   email: string;
   fullName: string;
   positions: { jobTitle: string; company: string }[];
+  additionalInfo: string;
 };
 
 interface HomeProps {
@@ -28,6 +29,7 @@ export default function Home({ onSubmit }: HomeProps) {
     email: "",
     fullName: "",
     positions: [{ jobTitle: "", company: "" }],
+    additionalInfo: "",
   });
 
   const [dimensions, setDimensions] = useState<PhoneDimensions>(
@@ -108,22 +110,8 @@ export default function Home({ onSubmit }: HomeProps) {
               </select>
               <Input
                 type="text"
-                name="linkedin"
-                placeholder="LinkedIn URL"
-                className="input-field"
-                onChange={handleChange}
-              />
-              <Input
-                type="text"
-                name="github"
-                placeholder="GitHub URL"
-                className="input-field"
-                onChange={handleChange}
-              />
-              <Input
-                type="text"
-                name="telegram"
-                placeholder="Telegram Handle"
+                name="fullName"
+                placeholder="Full Name"
                 className="input-field"
                 onChange={handleChange}
               />
@@ -143,9 +131,31 @@ export default function Home({ onSubmit }: HomeProps) {
               />
               <Input
                 type="text"
-                name="fullName"
-                placeholder="Full Name"
+                name="telegram"
+                placeholder="Telegram Handle"
                 className="input-field"
+                onChange={handleChange}
+              />
+              <Input
+                type="text"
+                name="linkedin"
+                placeholder="LinkedIn URL"
+                className="input-field"
+                onChange={handleChange}
+              />
+              <Input
+                type="text"
+                name="github"
+                placeholder="GitHub URL"
+                className="input-field"
+                onChange={handleChange}
+              />
+              <Input
+                type="text"
+                name="additionalInfo"
+                placeholder="Additional Information"
+                className="input-field"
+                value={formData.additionalInfo}
                 onChange={handleChange}
               />
               {formData.positions.map((position, index) => (
@@ -166,9 +176,10 @@ export default function Home({ onSubmit }: HomeProps) {
                     value={position.company}
                     onChange={(e) => handleChange(e, index, "company")}
                   />
-                  {formData.positions.length > 1 && ( // Only show remove button if there's more than one position
+                  {formData.positions.length > 1 && (
                     <Button
                       type="button"
+                      variant="destructive"
                       onClick={() => removePosition(index)}
                       className="remove-button"
                     >
