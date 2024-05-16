@@ -1,11 +1,13 @@
 import Head from "next/head";
+import Image from "next/image";
 import { useState } from "react";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
-import { type PhoneDimensions, phoneModels } from "~/data/PhoneModel";
-import Image from "next/image";
 import { Textarea } from "~/components/ui/textarea";
 import { Separator } from "~/components/ui/separator";
+import { type PhoneDimensions, phoneModels } from "~/data/PhoneModel";
+import { Mail, QrCode, SendHorizonal, Smartphone } from "lucide-react";
+import QRCode from "react-qr-code";
 
 type FormData = {
   linkedin: string;
@@ -98,7 +100,7 @@ export default function Home({ onSubmit }: HomeProps) {
             Networking Lock Screen Generator
           </h1>
           <div className="grid grid-cols-2 gap-3">
-            <section className="flex flex-col gap-3">
+            <section className="flex flex-col justify-start gap-3">
               <div className="flex items-center gap-2">
                 <p className="pl-1 text-sm font-extralight">Phone Model: </p>
                 <select
@@ -209,28 +211,39 @@ export default function Home({ onSubmit }: HomeProps) {
                       {position.jobTitle} @ {position.company}
                     </h2>
                   ))}
-                  <p className="text-xl font-extralight">
-                    Contact Number: {formData.phone}
-                  </p>
-                  <div className="flex items-center">
-                    <Image
-                      src={"/telegram.svg"}
-                      alt=""
-                      height={300}
-                      width={300}
-                      className="mr-2 h-6 w-6"
-                    />
+                  <Separator className="my-4" />
+                  <div className="flex items-center gap-2">
+                    <Smartphone className="h-6 w-6 text-neutral-500" />
+                    <p className="text-xl font-extralight">{formData.phone}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <SendHorizonal className="h-6 w-6 text-neutral-500" />
                     <p className="text-xl font-extralight">
                       @{formData.telegram}
                     </p>
                   </div>
-                  {formData.additionalInfo && <Separator className="my-4" />}
-                  <p
-                    className="text-xl font-extralight"
-                    style={{ whiteSpace: "pre-line" }}
-                  >
-                    {formData.additionalInfo}
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <Mail className="h-6 w-6 text-neutral-500" />
+                    <p className="text-xl font-extralight">{formData.email}</p>
+                  </div>
+                  <Separator className="my-4" />
+                  <div className="flex">
+                    {formData.additionalInfo && (
+                      <p
+                        className="w-1/2 text-xl font-extralight"
+                        style={{ whiteSpace: "pre-line" }}
+                      >
+                        {formData.additionalInfo}
+                      </p>
+                    )}
+                    <div className="flex w-1/2 flex-col gap-2">
+                      <p className="text-xl font-extralight">LinkedIn</p>
+                      <QRCode
+                        value={formData.linkedin}
+                        className="flex h-fit w-full border-2 p-4"
+                      />
+                    </div>
+                  </div>
                 </div>
                 <div className="h-[11%] bg-slate-400"></div>
               </div>
