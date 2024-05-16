@@ -12,8 +12,7 @@ type FormData = {
   phone: string;
   email: string;
   fullName: string;
-  jobTitle: string;
-  company: string;
+  positions: { jobTitle: string; company: string }[];
 };
 
 interface HomeProps {
@@ -28,8 +27,7 @@ export default function Home({ onSubmit }: HomeProps) {
     phone: "",
     email: "",
     fullName: "",
-    jobTitle: "",
-    company: "",
+    positions: [{ jobTitle: "", company: "" }],
   });
 
   const [dimensions, setDimensions] = useState<PhoneDimensions>(
@@ -37,10 +35,44 @@ export default function Home({ onSubmit }: HomeProps) {
   );
   const [selectedModel, setSelectedModel] = useState<string>("iPhone13");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index?: number,
+    field?: string,
+  ) => {
+    if (typeof index === "number" && field) {
+      const updatedPositions = formData.positions.map((position, idx) =>
+        idx === index ? { ...position, [field]: e.target.value } : position,
+      );
+      setFormData({
+        ...formData,
+        positions: updatedPositions,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      });
+    }
+  };
+
+  const removePosition = (index: number) => {
+    // Remove the position at the given index
+    const updatedPositions = formData.positions.filter(
+      (_, idx) => idx !== index,
+    );
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      positions: updatedPositions,
+    });
+  };
+
+  const addPosition = () => {
+    // Add a new position with empty job title and company
+    const newPositions = [...formData.positions, { jobTitle: "", company: "" }];
+    setFormData({
+      ...formData,
+      positions: newPositions,
     });
   };
 
@@ -49,7 +81,6 @@ export default function Home({ onSubmit }: HomeProps) {
     setSelectedModel(model);
     setDimensions(phoneModels[model] ?? { width: 0, height: 0 });
   };
-
   return (
     <>
       <Head>
@@ -117,20 +148,42 @@ export default function Home({ onSubmit }: HomeProps) {
                 className="input-field"
                 onChange={handleChange}
               />
-              <Input
-                type="text"
-                name="jobTitle"
-                placeholder="Job Title"
-                className="input-field"
-                onChange={handleChange}
-              />
-              <Input
-                type="text"
-                name="company"
-                placeholder="Company"
-                className="input-field"
-                onChange={handleChange}
-              />
+              {formData.positions.map((position, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <Input
+                    type="text"
+                    name="jobTitle"
+                    placeholder="Job Title"
+                    className="input-field"
+                    value={position.jobTitle}
+                    onChange={(e) => handleChange(e, index, "jobTitle")}
+                  />
+                  <Input
+                    type="text"
+                    name="company"
+                    placeholder="Company"
+                    className="input-field"
+                    value={position.company}
+                    onChange={(e) => handleChange(e, index, "company")}
+                  />
+                  {formData.positions.length > 1 && ( // Only show remove button if there's more than one position
+                    <Button
+                      type="button"
+                      onClick={() => removePosition(index)}
+                      className="remove-button"
+                    >
+                      Remove
+                    </Button>
+                  )}
+                </div>
+              ))}
+              <Button
+                type="button"
+                onClick={addPosition}
+                className="add-button"
+              >
+                Add Job
+              </Button>
             </section>
             <aside className="flex justify-center">
               <div
@@ -145,9 +198,11 @@ export default function Home({ onSubmit }: HomeProps) {
                   <h1 className="text-xl font-extralight">
                     Hello, I am {formData.fullName}
                   </h1>
-                  <h2 className="text-xl font-extralight">
-                    {formData.jobTitle} @ {formData.company}
-                  </h2>
+                  {formData.positions.map((position, index) => (
+                    <h2 key={index} className="text-xl font-extralight">
+                      {position.jobTitle} @ {position.company}
+                    </h2>
+                  ))}
                   <p className="text-xl font-extralight">
                     Contact Number: {formData.phone}
                   </p>
