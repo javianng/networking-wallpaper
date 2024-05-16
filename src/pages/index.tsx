@@ -142,7 +142,7 @@ export default function Home({ onSubmit }: HomeProps) {
               >
                 <div className="h-[27%] bg-slate-400"></div>
                 <div className="flex flex-col gap-1">
-                  <h1 className="text-2xl font-extralight">
+                  <h1 className="text-xl font-extralight">
                     Hello, I am {formData.fullName}
                   </h1>
                   <h2 className="text-xl font-extralight">
