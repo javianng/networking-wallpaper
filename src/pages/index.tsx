@@ -63,7 +63,6 @@ export default function Home({ onSubmit }: HomeProps) {
   };
 
   const removePosition = (index: number) => {
-    // Remove the position at the given index
     const updatedPositions = formData.positions.filter(
       (_, idx) => idx !== index,
     );
@@ -74,7 +73,6 @@ export default function Home({ onSubmit }: HomeProps) {
   };
 
   const addPosition = () => {
-    // Add a new position with empty job title and company
     const newPositions = [...formData.positions, { jobTitle: "", company: "" }];
     setFormData({
       ...formData,
@@ -89,16 +87,16 @@ export default function Home({ onSubmit }: HomeProps) {
   };
 
   const handleGenerateWallpaper = () => {
-    const element = document.getElementById("capture"); // The ID of the element you want to capture
+    const element = document.getElementById("capture");
     if (element) {
       toJpeg(element, {
-        quality: 0.95, // Adjust the quality of the image
-        pixelRatio: window.devicePixelRatio, // Consider the device pixel ratio
+        quality: 1.0,
+        pixelRatio: window.devicePixelRatio,
       })
         .then((dataUrl) => {
           const link = document.createElement("a");
           link.href = dataUrl;
-          link.download = "networking-lock-screen.jpg"; // Set the download filename
+          link.download = "networking-lock-screen.jpg";
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
