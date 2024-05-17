@@ -1,12 +1,12 @@
 import Head from "next/head";
-import Image from "next/image";
 import { useState } from "react";
+import { toJpeg } from "html-to-image";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
 import { Separator } from "~/components/ui/separator";
 import { type PhoneDimensions, phoneModels } from "~/data/PhoneModel";
-import { Mail, QrCode, SendHorizonal, Smartphone } from "lucide-react";
+import { Mail, SendHorizonal, Smartphone } from "lucide-react";
 import QRCode from "react-qr-code";
 
 type FormData = {
@@ -87,6 +87,30 @@ export default function Home({ onSubmit }: HomeProps) {
     setSelectedModel(model);
     setDimensions(phoneModels[model] ?? { width: 0, height: 0 });
   };
+
+  const handleGenerateWallpaper = () => {
+    const element = document.getElementById("capture"); // The ID of the element you want to capture
+    if (element) {
+      toJpeg(element, {
+        quality: 0.95, // Adjust the quality of the image
+        pixelRatio: window.devicePixelRatio, // Consider the device pixel ratio
+      })
+        .then((dataUrl) => {
+          const link = document.createElement("a");
+          link.href = dataUrl;
+          link.download = "networking-lock-screen.jpg"; // Set the download filename
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        })
+        .catch((error) => {
+          console.error("Could not generate image", error);
+        });
+    } else {
+      console.error("Element not found");
+    }
+  };
+
   return (
     <>
       <Head>
@@ -195,7 +219,8 @@ export default function Home({ onSubmit }: HomeProps) {
             </section>
             <aside className="flex justify-center">
               <div
-                className="flex flex-col justify-between rounded-lg border border-black p-3"
+                id="capture"
+                className="flex flex-col justify-between rounded-lg border border-black bg-white p-3"
                 style={{
                   width: `${dimensions.width}px`,
                   height: `${dimensions.height}px`,
@@ -249,7 +274,11 @@ export default function Home({ onSubmit }: HomeProps) {
               </div>
             </aside>
           </div>
-          <Button type="submit" className="btn-submit">
+          <Button
+            type="button"
+            onClick={handleGenerateWallpaper}
+            className="btn-submit"
+          >
             Generate Wallpaper
           </Button>
         </form>
