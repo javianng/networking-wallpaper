@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { useState } from "react";
 import { toJpeg } from "html-to-image";
 import { Input } from "~/components/ui/input";
