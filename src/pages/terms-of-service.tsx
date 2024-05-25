@@ -36,7 +36,7 @@ const TermsOfService = () => {
           <p className="mt-4 text-lg text-gray-600">
             You agree to use the service only for lawful purposes and in a way
             that does not infringe the rights of, restrict, or inhibit anyone
-            else's use and enjoyment of the service. Prohibited behavior
+            else&apos;s use and enjoyment of the service. Prohibited behavior
             includes harassing or causing distress or inconvenience to any other
             user, transmitting obscene or offensive content, or disrupting the
             normal flow of dialogue within our service.
@@ -64,7 +64,7 @@ const TermsOfService = () => {
           <p className="mt-4 text-lg text-gray-600">
             We reserve the right, at our sole discretion, to modify or replace
             these terms at any time. If a revision is material, we will try to
-            provide at least 30 days' notice prior to any new terms taking
+            provide at least 30 days&apos; notice prior to any new terms taking
             effect. What constitutes a material change will be determined at our
             sole discretion.
           </p>
