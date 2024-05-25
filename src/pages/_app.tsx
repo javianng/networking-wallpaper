@@ -1,6 +1,7 @@
 import Head from "next/head";
 import "~/styles/globals.css";
 import { type AppType } from "next/app";
+import Footer from "~/components/Footer";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
@@ -20,9 +21,8 @@ const MyApp: AppType = ({ Component, pageProps }) => {
           content="https://networking-wallpaper-generator.vercel.app/"
         />
       </Head>
-      <main>
-        <Component {...pageProps} />
-      </main>
+      <Component {...pageProps} />
+      <Footer />
     </>
   );
 };

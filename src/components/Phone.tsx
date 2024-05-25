@@ -24,7 +24,7 @@ export function Phone(dimensions: PhoneDimensions, formData: FormData) {
         height: `${dimensions.height}px`,
       }}
     >
-      <div className="h-[27%] bg-slate-400"></div>
+      <div className="h-[27%]"></div>
       <div className="flex flex-col gap-1">
         <h1 className="text-xl font-extralight">
           Hello, I am {formData.fullName}
@@ -66,7 +66,7 @@ export function Phone(dimensions: PhoneDimensions, formData: FormData) {
           </div>
         </div>
       </div>
-      <div className="h-[11%] bg-slate-400"></div>
+      <div className="h-[11%]"></div>
     </div>
   );
 }
