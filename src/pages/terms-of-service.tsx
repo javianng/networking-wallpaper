@@ -74,10 +74,10 @@ const TermsOfService = () => {
           <p className="mt-4 text-lg text-gray-600">
             If you have any questions about these Terms, please contact us at{" "}
             <a
-              href="mailto:your-email@example.com"
+              href="mailto:javian.ng.z.h@gmail.com"
               className="text-blue-500 underline"
             >
-              your-email@example.com
+              javian.ng.z.h@gmail.com
             </a>
             .
           </p>
