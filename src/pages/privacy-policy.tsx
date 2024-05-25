@@ -1,12 +1,11 @@
-import React from "react";
 import Navbar from "~/components/Navbar";
 
 const PrivacyPolicy = () => {
   return (
     <>
       <Navbar />
-      <div className="flex max-w-7xl items-center justify-center p-12">
-        <div className="">
+      <div className="flex items-center justify-center p-12">
+        <div className="w-full max-w-7xl">
           <h1 className="text-3xl font-bold text-gray-900">Privacy Policy</h1>
           <p className="mt-4 text-lg text-gray-600">
             Thank you for using our Lock Screen Generator for Networking Events.
