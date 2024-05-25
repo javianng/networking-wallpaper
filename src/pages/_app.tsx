@@ -2,6 +2,7 @@ import Head from "next/head";
 import "~/styles/globals.css";
 import { type AppType } from "next/app";
 import Footer from "~/components/Footer";
+import { Analytics } from "@vercel/analytics/react";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
@@ -22,6 +23,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         />
       </Head>
       <Component {...pageProps} />
+      <Analytics />
       <Footer />
     </>
   );
