@@ -18,6 +18,12 @@ const Footer = () => {
         <Link href="/privacy-policy" className="hover:underline">
           Privacy Policy
         </Link>
+        <Link
+          href="https://github.com/javianng/networking-wallpaper-generator/issues"
+          className="hover:underline"
+        >
+          Feedback
+        </Link>
       </div>
       <div className="mt-2">
         © {currentYear} Javian Ng. All rights reserved.
