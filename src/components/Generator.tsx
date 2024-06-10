@@ -15,7 +15,7 @@ function QRCodeCountButtons({
   setQRCodeCount: (count: number) => void;
 }) {
   return (
-    <section className="flex w-full flex-col items-center bg-white p-24">
+    <section className="flex w-full flex-col bg-white p-12 sm:items-center sm:p-24">
       <h1 className="pb-24 text-5xl font-bold">
         Choose Your{" "}
         <span className="underline decoration-8 underline-offset-[12px]">
