@@ -24,7 +24,11 @@ function QRCodeCountButtons({
       </h1>
       <div className="grid max-w-4xl grid-cols-1 grid-rows-2 justify-between gap-20 sm:grid-cols-2 sm:grid-rows-1">
         <div
-          onClick={() => setQRCodeCount(1)}
+          onClick={() => {
+            setQRCodeCount(1);
+            const element = document.getElementById("details");
+            element?.scrollIntoView({ behavior: "smooth" });
+          }}
           className={`flex h-[32rem] transition-transform duration-300 ${
             qrCodeCount === 1 ? "scale-105" : ""
           }`}
@@ -38,7 +42,11 @@ function QRCodeCountButtons({
           />
         </div>
         <div
-          onClick={() => setQRCodeCount(2)}
+          onClick={() => {
+            setQRCodeCount(2);
+            const element = document.getElementById("details");
+            element?.scrollIntoView({ behavior: "smooth" });
+          }}
           className={`flex h-[32rem] transition-transform duration-300 ${
             qrCodeCount === 2 ? "scale-105" : ""
           }`}
@@ -367,7 +375,9 @@ export default function Generator() {
         setQRCodeCount={handleQRCountChange}
       />
       <div className="w-full max-w-7xl p-12">
-        <h1 className="pb-12 text-5xl font-bold">Add Your Details</h1>
+        <h1 className="pb-12 text-5xl font-bold" id="details">
+          Add Your Details
+        </h1>
         <form className="flex flex-col gap-3">
           <div className="flex flex-col gap-8 sm:grid sm:grid-cols-2 sm:gap-3">
             <section className="flex flex-col justify-start gap-3">
