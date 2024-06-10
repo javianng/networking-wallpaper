@@ -1,7 +1,7 @@
 import QRCode from "react-qr-code";
+import { Separator } from "./ui/separator";
 import { type PhoneDimensions } from "~/data/PhoneModel";
 import { Smartphone, SendHorizonal, Mail } from "lucide-react";
-import { Separator } from "./ui/separator";
 
 export type FormData = {
   linkedin: string;
@@ -12,6 +12,7 @@ export type FormData = {
   fullName: string;
   positions: { jobTitle: string; company: string }[];
   additionalInfo: string;
+  qrCodes: { url: string; label: string }[];
 };
 
 export function Phone(dimensions: PhoneDimensions, formData: FormData) {
@@ -49,7 +50,7 @@ export function Phone(dimensions: PhoneDimensions, formData: FormData) {
         </div>
         <Separator className="my-4" />
         <div className="flex">
-          {formData.additionalInfo && (
+          {formData.qrCodes.length < 2 && formData.additionalInfo && (
             <p
               className="w-1/2 text-xl font-extralight"
               style={{ whiteSpace: "pre-line" }}
@@ -58,11 +59,15 @@ export function Phone(dimensions: PhoneDimensions, formData: FormData) {
             </p>
           )}
           <div className="flex w-1/2 flex-col gap-2">
-            <p className="text-xl font-extralight">LinkedIn</p>
-            <QRCode
-              value={formData.linkedin}
-              className="flex h-fit w-full border-2 p-4"
-            />
+            {formData.qrCodes.map((qrCode, index) => (
+              <div key={index} className="flex flex-col gap-2">
+                <p className="text-xl font-extralight">{qrCode.label}</p>
+                <QRCode
+                  value={qrCode.url}
+                  className="flex h-fit w-full border-2 p-4"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>
