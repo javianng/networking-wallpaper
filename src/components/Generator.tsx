@@ -267,7 +267,7 @@ export default function Generator() {
     } else {
       if (e.target.name === "additionalInfo") {
         const lines = e.target.value.split("\n");
-        if (lines.length > 7) {
+        if (lines.length > 5) {
           return;
         }
       }
