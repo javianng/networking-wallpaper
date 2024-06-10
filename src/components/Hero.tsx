@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { Button } from "./ui/button";
 import Link from "next/link";
+import { Button } from "./ui/button";
 import { ArrowDown } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="flex min-h-screen w-full items-center justify-center bg-white shadow-xl">
+    <section className="flex min-h-screen w-full items-center justify-center bg-neutral-100 shadow-xl">
       <div className="flex w-full max-w-7xl flex-col items-center p-12">
         <div className="flex flex-col-reverse gap-8 sm:grid sm:grid-cols-2">
           <div className="flex flex-col justify-center gap-4">
@@ -35,12 +35,12 @@ const Hero = () => {
               </Button>
             </Link>
           </div>
-
           <Image
             src={"/example2.png"}
             alt="Example Wallpaper 2"
             width={600}
             height={600}
+            className="animate-up-down"
           />
         </div>
       </div>

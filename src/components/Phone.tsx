@@ -12,20 +12,34 @@ export type FormData = {
   fullName: string;
   positions: { jobTitle: string; company: string }[];
   additionalInfo: string;
+  qrCodes: { url: string; label: string }[];
 };
 
-export function Phone(dimensions: PhoneDimensions, formData: FormData) {
+export function Phone(
+  dimensions: PhoneDimensions,
+  formData: FormData,
+  companyImage: string | null,
+) {
+  const hasTwoQRCodes = formData.qrCodes.length === 2;
+
   return (
     <div
       id="capture"
-      className="flex flex-col justify-between rounded-lg border border-black bg-white p-3"
+      className="relative flex flex-col justify-between overflow-hidden rounded-lg border border-black bg-white p-3"
       style={{
         width: `${dimensions.width}px`,
         height: `${dimensions.height}px`,
       }}
     >
-      <div className="h-[27%]"></div>
-      <div className="flex flex-col gap-1">
+      {companyImage && (
+        <img
+          src={companyImage}
+          alt="Company Background"
+          className="absolute inset-0 top-20 z-0 h-2/3 w-full object-cover opacity-5"
+        />
+      )}
+      <div className="relative z-10 h-[27%]"></div>
+      <div className="relative z-10 flex flex-col gap-1">
         <h1 className="text-xl font-extralight">
           Hello, I am {formData.fullName}
         </h1>
@@ -48,25 +62,27 @@ export function Phone(dimensions: PhoneDimensions, formData: FormData) {
           <p className="text-xl font-extralight">{formData.email}</p>
         </div>
         <Separator className="my-4" />
-        <div className="flex">
-          {formData.additionalInfo && (
+        <div className={`flex w-full justify-between gap-4`}>
+          {formData.qrCodes.length < 2 && formData.additionalInfo && (
             <p
-              className="w-1/2 text-xl font-extralight"
+              className="w-1/2 overflow-hidden text-xl font-extralight"
               style={{ whiteSpace: "pre-line" }}
             >
               {formData.additionalInfo}
             </p>
           )}
-          <div className="flex w-1/2 flex-col gap-2">
-            <p className="text-xl font-extralight">LinkedIn</p>
-            <QRCode
-              value={formData.linkedin}
-              className="flex h-fit w-full border-2 p-4"
-            />
-          </div>
+          {formData.qrCodes.map((qrCode, index) => (
+            <div key={index} className="flex w-1/2 flex-col gap-2">
+              <p className="text-xl font-extralight">{qrCode.label}</p>
+              <QRCode
+                value={qrCode.url}
+                className="flex h-fit w-full border-2 p-4"
+              />
+            </div>
+          ))}
         </div>
       </div>
-      <div className="h-[11%]"></div>
+      <div className="relative z-10 h-[11%]"></div>
     </div>
   );
 }
