@@ -51,9 +51,15 @@ export function Phone(dimensions: PhoneDimensions, formData: FormData) {
           <p className="text-xl font-extralight">{formData.email}</p>
         </div>
         <Separator className="my-4" />
-        <div
-          className={`flex ${hasTwoQRCodes ? "justify-between gap-4" : "justify-start"} w-full ${formData.qrCodes.length < 2 && formData.additionalInfo ? "flex-row-reverse" : ""}`}
-        >
+        <div className={`flex w-full justify-between gap-4`}>
+          {formData.qrCodes.length < 2 && formData.additionalInfo && (
+            <p
+              className="w-1/2 overflow-hidden text-xl font-extralight"
+              style={{ whiteSpace: "pre-line" }}
+            >
+              {formData.additionalInfo}
+            </p>
+          )}
           {formData.qrCodes.map((qrCode, index) => (
             <div key={index} className="flex w-1/2 flex-col gap-2">
               <p className="text-xl font-extralight">{qrCode.label}</p>
@@ -63,14 +69,6 @@ export function Phone(dimensions: PhoneDimensions, formData: FormData) {
               />
             </div>
           ))}
-          {formData.qrCodes.length < 2 && formData.additionalInfo && (
-            <p
-              className="mt-4 w-1/2 text-xl font-extralight"
-              style={{ whiteSpace: "pre-line" }}
-            >
-              {formData.additionalInfo}
-            </p>
-          )}
         </div>
       </div>
       <div className="h-[11%]"></div>
