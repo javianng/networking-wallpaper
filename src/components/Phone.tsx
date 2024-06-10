@@ -1,7 +1,7 @@
 import QRCode from "react-qr-code";
-import { Separator } from "./ui/separator";
 import { type PhoneDimensions } from "~/data/PhoneModel";
 import { Smartphone, SendHorizonal, Mail } from "lucide-react";
+import { Separator } from "./ui/separator";
 
 export type FormData = {
   linkedin: string;
@@ -16,6 +16,8 @@ export type FormData = {
 };
 
 export function Phone(dimensions: PhoneDimensions, formData: FormData) {
+  const hasTwoQRCodes = formData.qrCodes.length === 2;
+
   return (
     <div
       id="capture"
@@ -49,26 +51,26 @@ export function Phone(dimensions: PhoneDimensions, formData: FormData) {
           <p className="text-xl font-extralight">{formData.email}</p>
         </div>
         <Separator className="my-4" />
-        <div className="flex">
+        <div
+          className={`flex ${hasTwoQRCodes ? "justify-between gap-4" : "justify-start"} w-full ${formData.qrCodes.length < 2 && formData.additionalInfo ? "flex-row-reverse" : ""}`}
+        >
+          {formData.qrCodes.map((qrCode, index) => (
+            <div key={index} className="flex w-1/2 flex-col gap-2">
+              <p className="text-xl font-extralight">{qrCode.label}</p>
+              <QRCode
+                value={qrCode.url}
+                className="flex h-fit w-full border-2 p-4"
+              />
+            </div>
+          ))}
           {formData.qrCodes.length < 2 && formData.additionalInfo && (
             <p
-              className="w-1/2 text-xl font-extralight"
+              className="mt-4 w-1/2 text-xl font-extralight"
               style={{ whiteSpace: "pre-line" }}
             >
               {formData.additionalInfo}
             </p>
           )}
-          <div className="flex w-1/2 flex-col gap-2">
-            {formData.qrCodes.map((qrCode, index) => (
-              <div key={index} className="flex flex-col gap-2">
-                <p className="text-xl font-extralight">{qrCode.label}</p>
-                <QRCode
-                  value={qrCode.url}
-                  className="flex h-fit w-full border-2 p-4"
-                />
-              </div>
-            ))}
-          </div>
         </div>
       </div>
       <div className="h-[11%]"></div>
