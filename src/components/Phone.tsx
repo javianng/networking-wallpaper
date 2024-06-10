@@ -15,20 +15,31 @@ export type FormData = {
   qrCodes: { url: string; label: string }[];
 };
 
-export function Phone(dimensions: PhoneDimensions, formData: FormData) {
+export function Phone(
+  dimensions: PhoneDimensions,
+  formData: FormData,
+  companyImage: string | null,
+) {
   const hasTwoQRCodes = formData.qrCodes.length === 2;
 
   return (
     <div
       id="capture"
-      className="flex flex-col justify-between rounded-lg border border-black bg-white p-3"
+      className="relative flex flex-col justify-between overflow-hidden rounded-lg border border-black bg-white p-3"
       style={{
         width: `${dimensions.width}px`,
         height: `${dimensions.height}px`,
       }}
     >
-      <div className="h-[27%]"></div>
-      <div className="flex flex-col gap-1">
+      {companyImage && (
+        <img
+          src={companyImage}
+          alt="Company Background"
+          className="absolute inset-0 top-20 z-0 h-2/3 w-full object-cover opacity-5"
+        />
+      )}
+      <div className="relative z-10 h-[27%]"></div>
+      <div className="relative z-10 flex flex-col gap-1">
         <h1 className="text-xl font-extralight">
           Hello, I am {formData.fullName}
         </h1>
@@ -71,7 +82,7 @@ export function Phone(dimensions: PhoneDimensions, formData: FormData) {
           ))}
         </div>
       </div>
-      <div className="h-[11%]"></div>
+      <div className="relative z-10 h-[11%]"></div>
     </div>
   );
 }

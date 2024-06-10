@@ -5,6 +5,7 @@ import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
 import { type FormData, Phone } from "~/components/Phone";
 import { type PhoneDimensions, phoneModels } from "~/data/PhoneModel";
+import Image from "next/image";
 
 function QRCodeCountButtons({
   qrCodeCount,
@@ -14,23 +15,42 @@ function QRCodeCountButtons({
   setQRCodeCount: (count: number) => void;
 }) {
   return (
-    <section className="flex w-full flex-col items-center bg-white p-12">
-      <h1 className="pb-12 text-5xl font-bold">Choose Your Design</h1>
-      <div className="flex w-full max-w-4xl justify-between">
-        <Button
-          type="button"
+    <section className="flex w-full flex-col items-center bg-white p-24">
+      <h1 className="pb-24 text-5xl font-bold">
+        Choose Your{" "}
+        <span className="underline decoration-8 underline-offset-[12px]">
+          Design
+        </span>
+      </h1>
+      <div className="grid max-w-4xl grid-cols-1 grid-rows-2 justify-between gap-20 sm:grid-cols-2 sm:grid-rows-1">
+        <div
           onClick={() => setQRCodeCount(1)}
-          className={`btn-toggle ${qrCodeCount === 1 ? "btn-active" : ""}`}
+          className={`flex h-[32rem] transition-transform duration-300 ${
+            qrCodeCount === 1 ? "scale-105" : ""
+          }`}
         >
-          1 QR Code
-        </Button>
-        <Button
-          type="button"
+          <Image
+            src={"/one_qrcode.png"}
+            alt="One QR Code"
+            width={1600}
+            height={1600}
+            className=" flex object-scale-down"
+          />
+        </div>
+        <div
           onClick={() => setQRCodeCount(2)}
-          className={`btn-toggle ${qrCodeCount === 2 ? "btn-active" : ""}`}
+          className={`flex h-[32rem] transition-transform duration-300 ${
+            qrCodeCount === 2 ? "scale-105" : ""
+          }`}
         >
-          2 QR Codes
-        </Button>
+          <Image
+            src={"/two_qrcode.png"}
+            alt="Two QR Codes"
+            width={1600}
+            height={1600}
+            className=" flex object-scale-down"
+          />
+        </div>
       </div>
     </section>
   );
@@ -42,6 +62,7 @@ function FormFields({
   addPosition,
   removePosition,
   handleModelChange,
+  handleImageUpload,
   selectedModel,
   dimensions,
 }: {
@@ -55,6 +76,7 @@ function FormFields({
   addPosition: () => void;
   removePosition: (index: number) => void;
   handleModelChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectedModel: string;
   dimensions: PhoneDimensions;
 }) {
@@ -99,16 +121,10 @@ function FormFields({
         onChange={handleChange}
       />
       <Input
-        type="text"
-        name="linkedin"
-        placeholder="LinkedIn URL"
-        onChange={handleChange}
-      />
-      <Input
-        type="text"
-        name="github"
-        placeholder="GitHub URL"
-        onChange={handleChange}
+        type="file"
+        accept="image/*"
+        onChange={handleImageUpload}
+        className="input-field cursor-pointer"
       />
       {formData.qrCodes.length < 2 && (
         <Textarea
@@ -207,6 +223,7 @@ export default function Generator() {
     qrCodes: [{ url: "", label: "LinkedIn" }],
   });
 
+  const [companyImage, setCompanyImage] = useState<string | null>(null);
   const [dimensions, setDimensions] = useState<PhoneDimensions>(
     phoneModels.iPhone13 ?? { width: 0, height: 0 },
   );
@@ -275,6 +292,16 @@ export default function Generator() {
         ...formData,
         [e.target.name]: e.target.value,
       });
+    }
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.[0]) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setCompanyImage(event.target?.result as string);
+      };
+      reader.readAsDataURL(e.target.files[0]);
     }
   };
 
@@ -350,13 +377,14 @@ export default function Generator() {
                 addPosition={addPosition}
                 removePosition={removePosition}
                 handleModelChange={handleModelChange}
+                handleImageUpload={handleImageUpload}
                 selectedModel={selectedModel}
                 dimensions={dimensions}
               />
               <QRCodeFields formData={formData} handleChange={handleChange} />
             </section>
             <aside className="flex justify-center">
-              {Phone(dimensions, formData)}
+              {Phone(dimensions, formData, companyImage)}
             </aside>
           </div>
           <Button

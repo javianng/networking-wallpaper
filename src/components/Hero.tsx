@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { Button } from "./ui/button";
 import Link from "next/link";
+import { Button } from "./ui/button";
 import { ArrowDown } from "lucide-react";
 
 const Hero = () => {
@@ -35,12 +35,12 @@ const Hero = () => {
               </Button>
             </Link>
           </div>
-
           <Image
             src={"/example2.png"}
             alt="Example Wallpaper 2"
             width={600}
             height={600}
+            className="animate-up-down"
           />
         </div>
       </div>
