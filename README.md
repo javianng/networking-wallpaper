@@ -1,97 +1,86 @@
 # Networking Lock Screen Generator
 
-Unlock your networking potential by creating custom lock screens for networking events that showcase your professional details. This application allows you to generate professional-looking lock screens with QR codes, making it easy to share your contact information instantly.
+A web application that generates custom lock screen wallpapers for networking events, featuring QR codes and contact information.
 
 ## Features
 
-- **Customizable Lock Screens**: Add your professional details including name, phone number, email, job title, company, and additional information.
-- **QR Codes**: Generate one or two QR codes for easy sharing of your LinkedIn, GitHub, or any other URLs.
-- **Company Image**: Optionally upload a company image to be used as a background.
-- **Responsive Design**: The application is designed to be used on various devices.
-- **100% Free**: No cost involved in using this tool.
-- **Instant Generation**: Create your lock screen in seconds.
-- **Easy to Use**: Simple and intuitive interface.
+- **Custom Lock Screen Generation**: Create personalized lock screens with your professional details
+- **Multiple QR Code Support**: Add up to 2 QR codes (e.g., LinkedIn, GitHub, Portfolio)
+- **Responsive Design**: Works on all devices
+- **Multiple Phone Models**: Support for various phone dimensions including:
+  - iPhone 13
+  - iPhone 12
+  - Samsung S21
+  - Google Pixel 5
+- **Company Logo Integration**: Upload and display your company logo
+- **Real-time Preview**: See your changes instantly
+- **Error Handling**: Robust error boundary implementation
+- **Analytics**: Track usage and error patterns
+- **Accessibility**: Screen reader friendly with ARIA labels
 
-## Technologies Used
+## Tech Stack
 
-- **React**: JavaScript library for building user interfaces.
-- **TypeScript**: Typed superset of JavaScript that compiles to plain JavaScript.
-- **Next.js**: React framework for server-side rendering and static site generation.
-- **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
-- **html-to-image**: Library for converting HTML into images.
-- **lucide-react**: Icon library for React.
+- **React**: A JavaScript library for building user interfaces
+- **TypeScript**: A superset of JavaScript that adds static types
+- **Next.js**: A React framework for server-side rendering and static site generation
+- **Tailwind CSS**: A utility-first CSS framework
+- **html-to-image**: A library for converting HTML to images
+- **lucide-react**: An icon library for React
+- **Radix UI**: Unstyled, accessible components for building high‑quality design systems
+- **Vercel Analytics**: For tracking usage and performance
 
 ## Getting Started
 
-### Prerequisites
+1. Clone the repository:
 
-- **Node.js**: Ensure you have Node.js installed on your machine. You can download it from [Node.js](https://nodejs.org/).
+```bash
+git clone https://github.com/javianng/networking-wallpaper-generator.git
+```
 
-### Installation
+2. Install dependencies:
 
-1. **Clone the repository**:
+```bash
+npm install
+```
 
-   ```bash
-   git clone https://github.com/javianng/networking-lock-screen-generator.git
-   cd networking-lock-screen-generator
-   ```
+3. Run the development server:
 
-2. **Install dependencies**:
+```bash
+npm run dev
+```
 
-   ```bash
-   npm install
-   ```
-
-### Running the Application
-
-1. **Start the development server**:
-
-   ```bash
-   npm run dev
-   ```
-
-2. **Open your browser** and navigate to `http://localhost:3000` to view the application.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## Usage
 
-1. **Select QR Code Count**: Choose between one or two QR codes.
-2. **Enter Your Details**: Fill in your professional information including name, phone number, email, job title, company, and any additional info.
-3. **Upload Company Image (Optional)**: Add a background image representing your company.
-4. **Generate Wallpaper**: Click the "Generate Wallpaper" button to create your custom lock screen.
-5. **Download**: The generated lock screen can be downloaded as an image file.
-
-## Example
-
-Here is an example of how the lock screen looks:
-
-![Example Lock Screen](public/example2.png)
+1. Choose your design (1 or 2 QR codes)
+2. Fill in your professional details
+3. Upload your company logo (optional)
+4. Add QR code URLs and labels
+5. Select your phone model
+6. Click "Generate Wallpaper" to download
 
 ## Contributing
 
-We welcome contributions! Please follow these steps to contribute:
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
 
-1. **Fork the repository**.
-2. **Create a new branch** for your feature or bug fix.
-3. **Commit your changes**.
-4. **Push your branch** to your forked repository.
-5. **Open a pull request** with a detailed description of your changes.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
-## Acknowledgements
-
-- **React**: A JavaScript library for building user interfaces.
-- **TypeScript**: A superset of JavaScript that compiles to plain JavaScript.
-- **Next.js**: A React framework for server-side rendering and static site generation.
-- **Tailwind CSS**: A utility-first CSS framework.
-- **html-to-image**: A library for converting HTML to images.
-- **lucide-react**: An icon library for React.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## Contact
 
-If you have any questions or suggestions, feel free to open an issue or reach out to me on [LinkedIn](https://www.linkedin.com/in/javianngzh/).
+If you have any questions or suggestions, feel free to:
+
+- Open an issue
+- Reach out on [LinkedIn](https://www.linkedin.com/in/javianngzh/)
+- Visit the [GitHub repository](https://github.com/javianng/networking-wallpaper-generator)
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
 

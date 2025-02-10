@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { toJpeg } from "html-to-image";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
@@ -6,6 +6,15 @@ import { Textarea } from "~/components/ui/textarea";
 import { type FormData, Phone } from "~/components/Phone";
 import { type PhoneDimensions, phoneModels } from "~/data/PhoneModel";
 import Image from "next/image";
+import { Spinner } from "./ui/spinner";
+import type { GoogleAnalytics } from "~/types/analytics";
+
+// Add this interface to handle window.gtag
+declare global {
+  interface Window {
+    gtag?: GoogleAnalytics;
+  }
+}
 
 function QRCodeCountButtons({
   qrCodeCount,
@@ -72,7 +81,6 @@ function FormFields({
   handleModelChange,
   handleImageUpload,
   selectedModel,
-  dimensions,
 }: {
   formData: FormData;
   handleChange: (
@@ -86,7 +94,6 @@ function FormFields({
   handleModelChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   handleImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectedModel: string;
-  dimensions: PhoneDimensions;
 }) {
   return (
     <>
@@ -236,6 +243,7 @@ export default function Generator() {
     phoneModels.iPhone13 ?? { width: 0, height: 0 },
   );
   const [selectedModel, setSelectedModel] = useState<string>("iPhone13");
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const handleQRCountChange = (count: number) => {
     if (count === 1) {
@@ -342,28 +350,45 @@ export default function Generator() {
     setDimensions(phoneModels[model] ?? { width: 0, height: 0 });
   };
 
-  const handleGenerateWallpaper = () => {
+  const handleGenerateWallpaper = useCallback(async () => {
+    setIsGenerating(true);
     const element = document.getElementById("capture");
-    if (element) {
-      toJpeg(element, {
-        quality: 1.0,
-        pixelRatio: window.devicePixelRatio,
-      })
-        .then((dataUrl: string) => {
-          const link = document.createElement("a");
-          link.href = dataUrl;
-          link.download = "networking-lock-screen.jpg";
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        })
-        .catch((error: unknown) => {
-          console.error("Could not generate image", error);
+
+    try {
+      if (element) {
+        const dataUrl = await toJpeg(element, {
+          quality: 1.0,
+          pixelRatio: window.devicePixelRatio,
         });
-    } else {
-      console.error("Element not found");
+
+        // Track successful generation
+        if (window.gtag) {
+          window.gtag("event", "generate_wallpaper", {
+            event_category: "engagement",
+            event_label: "success",
+          });
+        }
+
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = "networking-lock-screen.jpg";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    } catch (error) {
+      console.error("Could not generate image", error);
+      // Track generation error
+      if (window.gtag) {
+        window.gtag("event", "generate_wallpaper_error", {
+          event_category: "error",
+          event_label: error instanceof Error ? error.message : "Unknown error",
+        });
+      }
+    } finally {
+      setIsGenerating(false);
     }
-  };
+  }, []);
 
   return (
     <section
@@ -389,7 +414,6 @@ export default function Generator() {
                 handleModelChange={handleModelChange}
                 handleImageUpload={handleImageUpload}
                 selectedModel={selectedModel}
-                dimensions={dimensions}
               />
               <QRCodeFields formData={formData} handleChange={handleChange} />
             </section>
@@ -401,8 +425,16 @@ export default function Generator() {
             type="button"
             onClick={handleGenerateWallpaper}
             className="btn-submit"
+            disabled={isGenerating}
           >
-            Generate Wallpaper
+            {isGenerating ? (
+              <>
+                <Spinner size="sm" className="mr-2" />
+                Generating...
+              </>
+            ) : (
+              "Generate Wallpaper"
+            )}
           </Button>
         </form>
       </div>

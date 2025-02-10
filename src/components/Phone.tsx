@@ -2,6 +2,7 @@ import QRCode from "react-qr-code";
 import { type PhoneDimensions } from "~/data/PhoneModel";
 import { Smartphone, SendHorizonal, Mail } from "lucide-react";
 import { Separator } from "./ui/separator";
+import Image from "next/image";
 
 export type FormData = {
   linkedin: string;
@@ -20,8 +21,6 @@ export function Phone(
   formData: FormData,
   companyImage: string | null,
 ) {
-  const hasTwoQRCodes = formData.qrCodes.length === 2;
-
   return (
     <div
       id="capture"
@@ -32,10 +31,12 @@ export function Phone(
       }}
     >
       {companyImage && (
-        <img
+        <Image
           src={companyImage}
-          alt="Company Background"
-          className="absolute inset-0 top-20 z-0 h-2/3 w-full object-cover opacity-5"
+          alt="Company Logo"
+          width={100}
+          height={100}
+          className="mb-4 h-24 w-24 rounded-full object-cover"
         />
       )}
       <div className="relative z-10 h-[27%]"></div>
